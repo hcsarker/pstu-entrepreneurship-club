@@ -435,19 +435,346 @@ body {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .hero-section {
-        padding: 80px 0;
+        padding: 60px 0 40px;
+        text-align: center;
+    }
+
+    .hero-section h1 {
+        font-size: 2.5rem !important;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+
+    .hero-section .lead {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .hero-section .btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 1rem;
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+
+    .hero-section .d-flex {
+        flex-direction: column;
+    }
+
+    .hero-section img {
+        max-width: 280px;
+        margin-top: 2rem;
     }
 
     .section-title {
-        margin-bottom: 30px;
+        font-size: 2rem !important;
+        margin-bottom: 2rem;
+        text-align: center;
     }
 
     .feature-card,
     .counter-item {
-        margin-bottom: 20px;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .navbar-brand {
+        font-size: 1rem;
+    }
+
+    .navbar-brand img {
+        height: 35px;
+    }
+
+    .navbar-nav {
+        text-align: center;
+        padding-top: 1rem;
+    }
+
+    .navbar-nav .nav-link {
+        padding: 0.75rem 1rem;
+        margin: 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .navbar-nav .nav-link:last-child {
+        border-bottom: none;
+    }
+
+    .btn.ms-lg-3 {
+        margin-left: 0 !important;
+        margin-top: 1rem;
+        width: 200px;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        display: block;
+    }
+
+    /* Form responsiveness */
+    .card-body {
+        padding: 2rem 1.5rem !important;
+    }
+
+    .form-control,
+    .form-select {
+        font-size: 16px; /* Prevent zoom on iOS */
+        padding: 12px 15px;
+    }
+
+    .btn-lg {
+        font-size: 1rem;
+        padding: 12px 20px;
+    }
+
+    /* Footer adjustments */
+    .footer {
+        text-align: center;
+    }
+
+    .footer .row > div {
+        margin-bottom: 2rem;
+    }
+
+    /* Alert responsiveness */
+    .alert {
+        font-size: 0.9rem;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Tablet responsive */
+@media (max-width: 992px) and (min-width: 769px) {
+    .hero-section {
+        padding: 80px 0 60px;
+    }
+
+    .hero-section h1 {
+        font-size: 3rem !important;
+    }
+
+    .hero-section .btn {
+        padding: 12px 25px;
+    }
+
+    .card-body {
+        padding: 3rem 2rem !important;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    .hero-section {
+        padding: 40px 0 30px;
+    }
+
+    .hero-section h1 {
+        font-size: 2rem !important;
+        line-height: 1.3;
+    }
+
+    .hero-section .lead {
+        font-size: 0.95rem;
+    }
+
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .card {
+        margin: 0 -15px;
+        border-radius: 0;
+    }
+
+    .card-body {
+        padding: 1.5rem 1rem !important;
+    }
+
+    .section-title {
+        font-size: 1.75rem !important;
+        margin-bottom: 1.5rem;
+    }
+
+    .navbar-brand {
+        font-size: 0.9rem;
     }
 
     .navbar-brand img {
         height: 30px;
+    }
+
+    .form-check-label {
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+    }
+
+    /* Better touch targets */
+    .form-check-input {
+        width: 1.2em;
+        height: 1.2em;
+    }
+
+    .navbar-toggler {
+        padding: 6px 8px;
+        font-size: 1rem;
+    }
+}
+
+/* Mobile-specific improvements */
+.mobile-center {
+    text-align: center;
+}
+
+.mobile-full-width {
+    width: 100%;
+}
+
+.mobile-spacing {
+    margin-bottom: 1.5rem;
+}
+
+/* Touch-friendly buttons */
+.btn-touch {
+    min-height: 48px;
+    min-width: 48px;
+    touch-action: manipulation;
+}
+
+/* Prevent zoom on form inputs for iOS */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
+    font-size: 16px;
+}
+
+/* Smooth scrolling for mobile */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Loading spinner for mobile */
+.btn-loading .fa-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Mobile navigation improvements */
+.navbar-collapse {
+    background-color: var(--primary-color);
+    margin-top: 1rem;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+/* Sticky footer for mobile */
+@media (max-width: 768px) {
+    body {
+        padding-bottom: 0;
+    }
+    
+    .footer {
+        margin-top: 3rem;
+    }
+}
+
+/* Accessibility improvements */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Additional Mobile Performance Optimizations */
+@media (max-width: 768px) {
+    /* Improve text readability on mobile */
+    body {
+        line-height: 1.6;
+        -webkit-text-size-adjust: 100%;
+    }
+    
+    /* Better touch targets */
+    .btn, .nav-link, a {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Optimize images for mobile */
+    img {
+        height: auto;
+        max-width: 100%;
+    }
+    
+    /* Improve form usability */
+    .form-floating > label {
+        font-size: 1rem;
+    }
+    
+    /* Better spacing for mobile content */
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    /* Mobile-friendly cards */
+    .card {
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    /* Improve button interactions */
+    .btn:active {
+        transform: scale(0.98);
+    }
+    
+    /* Better mobile typography */
+    h1, h2, h3, h4, h5, h6 {
+        line-height: 1.3;
+        word-wrap: break-word;
+    }
+    
+    /* Mobile-friendly tables */
+    .table-responsive {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero-section {
+        min-height: 60vh;
+        padding-top: 80px;
+    }
+    
+    .hero-section .display-4 {
+        font-size: 1.8rem !important;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .feature-icon i {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 }

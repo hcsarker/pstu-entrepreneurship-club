@@ -65,7 +65,8 @@ function initMembershipForm() {
             }
 
             // Send data to backend
-            const response = await fetch('http://localhost:5000/api/join', {
+            const apiUrl = window.API_BASE_URL || 'http://localhost:5000';
+            const response = await fetch(`${apiUrl}/api/join`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

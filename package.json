@@ -1,0 +1,26 @@
+{
+  "name": "pstu-entrepreneurship-club",
+  "version": "1.0.0",
+  "description": "PSTU Entrepreneurship Club Website - Full Stack Application",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev",
+    "install-backend": "cd backend && npm install",
+    "install-frontend": "echo 'Frontend uses static files - no installation needed'",
+    "build": "echo 'Building project...' && npm run install-backend",
+    "test": "echo 'No tests specified'"
+  },
+  "keywords": [
+    "entrepreneurship",
+    "pstu",
+    "education",
+    "startup",
+    "club"
+  ],
+  "author": "HC Sarker",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hcsarker/pstu-entrepreneurship-club.git"
+  }
+}
