@@ -74,9 +74,108 @@
                 <div class="card shadow-sm">
                     <div class="card-body p-5">
                         <h3 class="text-center mb-4">Membership Application</h3>
-                        <form>
-                            <!-- Form fields -->
-                            <button type="submit" class="btn btn-primary w-100 mt-3">Submit Application</button>
+                        <div id="alertContainer"></div>
+                        <form id="membershipForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="fullName" class="form-label">Full Name *</label>
+                                    <input type="text" class="form-control" id="fullName" name="name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email Address *</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="studentId" class="form-label">Student ID</label>
+                                    <input type="text" class="form-control" id="studentId" name="studentId" placeholder="e.g., 2021-0101-001">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="department" class="form-label">Department *</label>
+                                    <select class="form-control" id="department" name="department" required>
+                                        <option value="">Select Department</option>
+                                        <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+                                        <option value="Electrical and Electronic Engineering">Electrical and Electronic Engineering</option>
+                                        <option value="Civil Engineering">Civil Engineering</option>
+                                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                        <option value="Business Administration">Business Administration</option>
+                                        <option value="Economics">Economics</option>
+                                        <option value="Agricultural Economics">Agricultural Economics</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="+880 1XXX XXXXXX">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="year" class="form-label">Academic Year</label>
+                                    <select class="form-control" id="year" name="year">
+                                        <option value="">Select Year</option>
+                                        <option value="1st Year">1st Year</option>
+                                        <option value="2nd Year">2nd Year</option>
+                                        <option value="3rd Year">3rd Year</option>
+                                        <option value="4th Year">4th Year</option>
+                                        <option value="Graduate">Graduate</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="interests" class="form-label">Areas of Interest</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" value="Technology Startups" id="tech">
+                                            <label class="form-check-label" for="tech">Technology Startups</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" value="Social Entrepreneurship" id="social">
+                                            <label class="form-check-label" for="social">Social Entrepreneurship</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" value="Business Development" id="business">
+                                            <label class="form-check-label" for="business">Business Development</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" value="Marketing & Sales" id="marketing">
+                                            <label class="form-check-label" for="marketing">Marketing & Sales</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" value="Finance & Investment" id="finance">
+                                            <label class="form-check-label" for="finance">Finance & Investment</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" value="Innovation & Research" id="innovation">
+                                            <label class="form-check-label" for="innovation">Innovation & Research</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="experience" class="form-label">Previous Experience</label>
+                                <textarea class="form-control" id="experience" name="experience" rows="3" placeholder="Tell us about any previous entrepreneurship, business, or leadership experience..."></textarea>
+                            </div>
+                            <div class="mb-4">
+                                <label for="message" class="form-label">Why do you want to join? *</label>
+                                <textarea class="form-control" id="message" name="message" rows="4" required placeholder="Share your motivation and what you hope to achieve by joining the PSTU Entrepreneurship Club..."></textarea>
+                            </div>
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="agreement" required>
+                                <label class="form-check-label" for="agreement">
+                                    I agree to the <a href="#" class="text-primary">terms and conditions</a> and commit to actively participate in club activities.
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 mt-3">
+                                <span class="btn-text">Submit Application</span>
+                                <span class="btn-loading d-none">
+                                    <i class="fas fa-spinner fa-spin me-2"></i>Submitting...
+                                </span>
+                            </button>
                         </form>
                     </div>
                 </div>
