@@ -183,7 +183,7 @@ npm run dev
 
 ### 📁 **Project Structure**
 
-```
+````
 pstu-entrepreneurship-club/
 ├── frontend/           # Static website files
 │   ├── assets/        # Images, CSS, JS
@@ -191,28 +191,84 @@ pstu-entrepreneurship-club/
 ├── backend/           # Node.js API server
 │   ├── models/       # Database models
 │   ├── routes/       # API routes
+
+### 📦 Manual Deployment (On-Demand)
+
+You said you prefer deploying manually after finishing work each time. Use the following steps—no auto deploy pipeline required.
+
+#### 1. Backend (Vercel Serverless)
+From project root:
+```bash
 │   └── controllers/  # Business logic
 └── README.md         # Project documentation
-```
+````
 
 ---
 
 ## 🤝 Contributing
 
+Required Environment Variables (set in Vercel Dashboard → Project → Settings → Environment Variables):
+
+```
+MONGO_URI = <your MongoDB Atlas connection string>
+NODE_ENV  = production
+# (Optional) SEED_KEY for dev seeding only (omit in prod)
+```
+
+Verify after deploy:
+
+````bash
+
 We welcome contributions from all members! Whether you're fixing bugs, adding features, or improving documentation, your help is appreciated.
 
 ### 📋 **How to Contribute**
 
+#### 2. Frontend (Static)
+Create a second Vercel project (or subfolder deploy):
+```bash
+
 1. **🍴 Fork** the repository
 2. **🌿 Create** your feature branch (`git checkout -b feature/AmazingFeature`)
 3. **✍️ Commit** your changes (`git commit -m 'Add some AmazingFeature'`)
+No build step needed (pure static). Output directory = `frontend`.
+
+If you want to host frontend elsewhere (e.g. GitHub Pages / Netlify):
+````
+
+Deploy directory: frontend
+
+````
+
+#### 3. Updating API Base URL
+`frontend/assets/js/config.js` auto-detects localhost vs production. If backend domain changes, update the `production` field.
+
+#### 4. Manual Content Seeding (DEV only)
+Add `SEED_KEY` locally, then:
+```bash
 4. **📤 Push** to the branch (`git push origin feature/AmazingFeature`)
 5. **🔄 Open** a Pull Request
+Remove `SEED_KEY` from production for security.
+
+#### 5. Quick Health Script
+```bash
 
 ### 📝 **Contribution Guidelines**
 
 - Follow existing code style and conventions
 - Write clear, descriptive commit messages
+
+#### 6. Rollback
+In Vercel Deployments tab promote the last good production deployment if new one fails.
+
+#### 7. Common Issues
+| Problem | Cause | Fix |
+|---------|-------|-----|
+| 401 on every route | Project Protection enabled | Disable protection in Vercel Settings |
+| 500 startup | Bad MONGO_URI / Atlas access | Check connection string & allowlist |
+| Empty content arrays | Not seeded / no data | Use seed route (dev) or insert via MongoDB |
+
+#### 8. Optional Hardening
+Add pagination & caching later (see `DEPLOYMENT_CHECKLIST.md`).
 - Update documentation for any new features
 - Test your changes thoroughly before submitting
 - Be respectful and constructive in discussions
@@ -234,3 +290,4 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 [![Back to Top](https://img.shields.io/badge/Back%20to%20Top-000000?style=for-the-badge&logo=github&logoColor=white)](#-pstu-entrepreneurship-club)
 
 </div>
+````

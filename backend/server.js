@@ -1,6 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
 const app = express();
@@ -16,9 +20,26 @@ const corsOptions = {
     optionsSuccessStatus: 200
 };
 
+app.set('trust proxy', 1);
 app.use(cors(corsOptions));
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' }
+}));
+app.use(compression());
+if (process.env.NODE_ENV !== 'test') {
+    app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
+}
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+
+// Rate limiter basic
+const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 500,
+    standardHeaders: true,
+    legacyHeaders: false
+});
+app.use('/api', apiLimiter);
 
 const PORT = process.env.PORT || 5000;
 
@@ -29,7 +50,9 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Routes
 const memberRoutes = require('./routes/memberRoutes');
+const contentRoutes = require('./routes/contentRoutes');
 app.use('/api', memberRoutes);
+app.use('/api/content', contentRoutes);
 
 // Default route
 app.get('/', (req, res) => {
@@ -38,8 +61,14 @@ app.get('/', (req, res) => {
         version: '1.0.0',
         endpoints: {
             members: '/api/members',
-            join: '/api/join'
-        }
+            join: '/api/join',
+            events: '/api/content/events',
+            products: '/api/content/products',
+            posts: '/api/content/posts',
+            startups: '/api/content/startups',
+            team: '/api/content/team'
+        },
+        docs: 'Add documentation endpoint in future'
     });
 });
 

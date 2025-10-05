@@ -1,0 +1,243 @@
+// Dynamic rendering + filters + lightbox + simple utilities
+import { events as localEvents, products as localProducts, blogPosts as localBlogPosts, startups as localStartups, teamMembers as localTeam, blogCategories as localBlogCats, productCategories as localProdCats, eventCategories as localEventCats } from './data.js';
+
+// Attempt fetching from API if available; fallback to local data
+let events = localEvents;
+let products = localProducts;
+let blogPosts = localBlogPosts;
+let startups = localStartups;
+let teamMembers = localTeam;
+let blogCategories = localBlogCats;
+let productCategories = localProdCats;
+let eventCategories = localEventCats;
+
+async function tryFetchAll(){
+  const base = window.API_BASE_URL || '';
+  try {
+    const [ev, prod, posts, su, team] = await Promise.all([
+      fetchJSON(base + '/api/content/events'),
+      fetchJSON(base + '/api/content/products'),
+      fetchJSON(base + '/api/content/posts'),
+      fetchJSON(base + '/api/content/startups'),
+      fetchJSON(base + '/api/content/team')
+    ]);
+    if (ev?.items?.length) { events = ev.items.map(x=>({ ...x, type: x.type || (new Date(x.date) > new Date() ? 'upcoming':'past') })); eventCategories = [...new Set(events.map(e=>e.category).filter(Boolean))]; }
+    if (prod?.items?.length) { products = prod.items; productCategories = [...new Set(products.map(p=>p.category).filter(Boolean))]; }
+    if (posts?.items?.length) { blogPosts = posts.items; blogCategories = [...new Set(blogPosts.map(p=>p.category).filter(Boolean))]; }
+    if (su?.items?.length) { startups = su.items; }
+    if (team?.items?.length) { teamMembers = team.items; }
+  } catch (e) {
+    console.warn('Content API fetch failed, using local data', e);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await tryFetchAll();
+  renderIf('#eventsDynamic', renderEvents, { scope:'upcoming' });
+  renderIf('#pastEventsDynamic', renderEvents, { scope:'past' });
+  renderIf('#eventFilters', renderEventFilters);
+  renderIf('#productsGrid', renderProducts);
+  renderIf('#productFilters', renderProductFilters);
+  renderIf('#blogPostsGrid', renderBlogPosts);
+  renderIf('#blogCategoryFilters', renderBlogCategories);
+  renderIf('#startupsGrid', renderStartups);
+  renderIf('#teamGrid', renderTeam);
+  initLightbox();
+  attachGlobalSearch();
+});
+
+function renderIf(selector, fn, extra){ const el=document.querySelector(selector); if(el) fn(el, extra); }
+
+// ---------- EVENTS ----------
+function renderEvents(container, { scope='upcoming', category }={}) {
+  const list = events.filter(e=> e.type===scope && (!category || e.category===category));
+  container.innerHTML = list.map(e => `
+    <div class="col-md-6 col-lg-4 fade-in-up">
+      <div class="event-card h-100">
+        <div class="position-relative">
+          <img src="${e.cover}" alt="${e.title}" class="card-img-top lightbox-trigger" data-lightbox-src="${e.cover}">
+          <div class="event-date">${formatDateLabel(e.date)}</div>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">${e.title}</h5>
+          <p class="card-text small text-muted mb-2"><i class="fas fa-map-marker-alt me-1 text-primary"></i>${e.location}</p>
+          <p class="card-text">${e.excerpt}</p>
+          <span class="badge rounded-pill bg-primary-subtle text-primary border">${e.category}</span>
+        </div>
+      </div>
+    </div>
+  `).join('') || emptyState('No events found');
+}
+
+function renderEventFilters(container){
+  container.innerHTML = `
+    <div class="d-flex flex-wrap gap-2">
+      <button class="btn btn-outline-primary btn-sm active" data-evcat="all">All</button>
+      ${eventCategories.map(c=>`<button class="btn btn-outline-primary btn-sm" data-evcat="${c}">${c}</button>`).join('')}
+    </div>`;
+  container.addEventListener('click', e => {
+    if(e.target.matches('[data-evcat]')){
+      [...container.querySelectorAll('button')].forEach(b=>b.classList.remove('active'));
+      e.target.classList.add('active');
+      const cat = e.target.dataset.evcat;
+      renderEvents(document.querySelector('#eventsDynamic'), { scope:'upcoming', category: cat==='all'? undefined:cat });
+      renderEvents(document.querySelector('#pastEventsDynamic'), { scope:'past', category: cat==='all'? undefined:cat });
+    }
+  });
+}
+
+// ---------- PRODUCTS ----------
+function renderProducts(container, { category, query }={}) {
+  const list = products.filter(p => (!category || p.category===category) && (!query || p.name.toLowerCase().includes(query.toLowerCase())));
+  container.innerHTML = list.map(p => `
+    <div class="col-6 col-md-4 col-lg-3 fade-in-up">
+      <div class="product-card h-100 position-relative">
+        ${p.badge?`<div class="product-badge">${p.badge}</div>`:''}
+        <img src="${p.img}" alt="${p.name}" class="card-img-top lightbox-trigger" data-lightbox-src="${p.img}">
+        <div class="card-body">
+          <h6 class="mb-1">${p.name}</h6>
+          <p class="text-primary fw-bold mb-2">৳${p.price}</p>
+          <button class="btn btn-sm btn-outline-primary w-100" disabled>Order</button>
+        </div>
+      </div>
+    </div>
+  `).join('') || emptyState('No products match');
+}
+
+function renderProductFilters(container){
+  container.innerHTML = `
+    <div class="d-flex flex-wrap gap-2 mb-3">
+      <button class="btn btn-outline-primary btn-sm active" data-prodcat="all">All</button>
+      ${productCategories.map(c=>`<button class="btn btn-outline-primary btn-sm" data-prodcat="${c}">${c}</button>`).join('')}
+      <div class="ms-auto input-group input-group-sm" style="max-width:220px;">
+        <span class="input-group-text bg-light"><i class="fas fa-search"></i></span>
+        <input type="search" class="form-control" id="productSearch" placeholder="Search..." />
+      </div>
+    </div>`;
+  const grid = document.querySelector('#productsGrid');
+  container.addEventListener('click', e => {
+    if(e.target.matches('[data-prodcat]')){
+      [...container.querySelectorAll('[data-prodcat]')].forEach(b=>b.classList.remove('active'));
+      e.target.classList.add('active');
+      const cat = e.target.dataset.prodcat;
+      const query = container.querySelector('#productSearch').value;
+      renderProducts(grid, { category: cat==='all'? undefined:cat, query });
+    }
+  });
+  container.querySelector('#productSearch').addEventListener('input', (e)=>{
+    const active = container.querySelector('[data-prodcat].active').dataset.prodcat;
+    renderProducts(grid, { category: active==='all'? undefined:active, query: e.target.value });
+  });
+}
+
+// ---------- BLOG ----------
+function renderBlogPosts(container, { category }={}) {
+  const list = blogPosts.filter(p=> !category || p.category===category);
+  container.innerHTML = list.map(p => `
+    <div class="col-md-6 col-lg-4 fade-in-up">
+      <div class="blog-card h-100">
+        <img src="${p.cover}" alt="${p.title}" class="card-img-top lightbox-trigger" data-lightbox-src="${p.cover}">
+        <div class="card-body">
+          <span class="blog-date small text-muted"><i class="far fa-calendar-alt me-1"></i>${formatDate(p.date)} • ${p.readTime} min</span>
+          <h5 class="card-title mt-2">${p.title}</h5>
+          <p class="card-text">${p.excerpt}</p>
+          <span class="badge bg-primary-subtle text-primary border">${p.category}</span>
+        </div>
+      </div>
+    </div>
+  `).join('') || emptyState('No posts published yet');
+}
+
+function renderBlogCategories(container){
+  container.innerHTML = `
+    <div class="d-flex flex-wrap gap-2">
+      <button class="btn btn-outline-primary btn-sm active" data-blogcat="all">All</button>
+      ${blogCategories.map(c=>`<button class="btn btn-outline-primary btn-sm" data-blogcat="${c}">${c}</button>`).join('')}
+    </div>`;
+  const grid = document.querySelector('#blogPostsGrid');
+  container.addEventListener('click', e => {
+    if(e.target.matches('[data-blogcat]')){
+      [...container.querySelectorAll('[data-blogcat]')].forEach(b=>b.classList.remove('active'));
+      e.target.classList.add('active');
+      const cat = e.target.dataset.blogcat;
+      renderBlogPosts(grid, { category: cat==='all'? undefined:cat });
+    }
+  });
+}
+
+// ---------- STARTUPS ----------
+function renderStartups(container){
+  container.innerHTML = startups.map(s => `
+    <div class="col-sm-6 col-lg-3 fade-in-up">
+      <div class="card border-0 shadow-sm h-100 product-card">
+        <img src="${s.cover}" alt="${s.name}" class="card-img-top lightbox-trigger" data-lightbox-src="${s.cover}">
+        <div class="card-body">
+          <h5 class="card-title mb-1">${s.name}</h5>
+          <p class="text-muted small mb-2">${s.tagline}</p>
+          <span class="badge bg-primary-subtle text-primary border">${s.stage}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ---------- TEAM ----------
+function renderTeam(container){
+  container.innerHTML = teamMembers.map(m => `
+    <div class="col-6 col-md-4 col-lg-3 fade-in-up">
+      <div class="feature-card text-center h-100 p-3">
+        <img src="${m.avatar}" alt="${m.name}" class="rounded-circle mb-3" style="width:80px;height:80px;object-fit:cover;">
+        <h6 class="mb-1">${m.name}</h6>
+        <p class="text-primary small mb-1">${m.role}</p>
+        <p class="text-muted small mb-2">${m.department}</p>
+        <div class="d-flex justify-content-center gap-2 flex-wrap">
+          ${Object.entries(m.socials).map(([k,v])=>`<a href="${v}" class="text-decoration-none small" aria-label="${k}" target="_blank"><i class="fab fa-${k}"></i></a>`).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ---------- LIGHTBOX ----------
+function initLightbox(){
+  if(document.querySelector('.lightbox-trigger')){
+    const overlay = document.createElement('div');
+    overlay.id='lightboxOverlay';
+    overlay.innerHTML = '<div class="lightbox-content"><img alt="Preview" /><button class="lightbox-close" aria-label="Close">×</button></div>';
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click', e=> { if(e.target===overlay || e.target.classList.contains('lightbox-close')) overlay.classList.remove('active'); });
+    document.body.addEventListener('click', e => {
+      const t = e.target.closest('.lightbox-trigger');
+      if(t){
+        const src = t.dataset.lightboxSrc || t.getAttribute('src');
+        overlay.querySelector('img').src = src;
+        overlay.classList.add('active');
+      }
+    });
+  }
+}
+
+// ---------- GLOBAL SEARCH (optional hook) ----------
+function attachGlobalSearch(){
+  const globalEl = document.querySelector('#globalSearch');
+  if(!globalEl) return;
+  // Could implement site-wide filtering
+}
+
+// ---------- HELPERS ----------
+function formatDate(d){
+  return new Date(d).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+}
+function formatDateLabel(d){
+  const dt = new Date(d); return dt.toLocaleDateString('en-US', { month:'short', day:'numeric' });
+}
+function emptyState(msg){ return `<div class="col-12 text-center text-muted py-4">${msg}</div>`; }
+
+async function fetchJSON(url){
+  const controller = new AbortController();
+  const t = setTimeout(()=>controller.abort(), 6000);
+  const res = await fetch(url, { signal: controller.signal });
+  clearTimeout(t);
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  return res.json();
+}

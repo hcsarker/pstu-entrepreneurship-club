@@ -10,6 +10,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/enhancements.css" />
     <link rel="icon" href="assets/images/favicon.png" type="image/png" />
 </head>
 
@@ -25,7 +26,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto enhanced-nav">
                     <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
@@ -34,9 +35,9 @@
                     <li class="nav-item"><a class="nav-link" href="store.html">Store</a></li>
                     <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
                     <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                 </ul>
                 <a href="join.html" class="btn btn-primary ms-lg-3">Join Now</a>
+                <button id="themeToggle" type="button" class="ms-2" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
             </div>
         </div>
     </nav>
@@ -263,6 +264,7 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="assets/js/config.js"></script>
     <script src="assets/js/script.js"></script>
+    <script src="assets/js/ui.js"></script>
     <script>
         // Initialize AOS
         AOS.init({

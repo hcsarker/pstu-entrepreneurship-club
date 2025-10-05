@@ -10,6 +10,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/enhancements.css" />
     <link rel="icon" href="assets/images/favicon.png" type="image/png" />
 </head>
 
@@ -25,7 +26,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto enhanced-nav">
                     <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
@@ -34,21 +35,21 @@
                     <li class="nav-item"><a class="nav-link" href="store.html">Store</a></li>
                     <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
                     <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                 </ul>
                 <a href="join.html" class="btn btn-primary ms-lg-3">Join Now</a>
+                <button id="themeToggle" type="button" class="ms-2" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
             </div>
         </div>
     </nav>
 
 <!-- Store Hero Section -->
-<section class="hero-section text-white"
-    style="background: linear-gradient(rgba(12, 0, 50, 0.8), rgba(12, 0, 50, 0.8)), url('assets/images/store-hero.jpg') center/cover no-repeat;">
+<section class="hero-section text-white position-relative"
+    style="background: linear-gradient(rgba(12,0,50,0.85), rgba(12,0,50,0.85)), url('assets/images/store-hero.jpg') center/cover no-repeat;">
     <div class="container py-5">
         <div class="row py-5">
             <div class="col-lg-8 mx-auto text-center">
-                <h1 class="display-4 fw-bold mb-4">Club Store</h1>
-                <p class="lead">Show your support with our official merchandise</p>
+                <h1 class="hero-heading mb-4">Club <span class="gradient-text">Store</span></h1>
+                <p class="hero-subtitle">Show your support with our official merchandise</p>
             </div>
         </div>
     </div>
@@ -57,10 +58,11 @@
 <!-- Products Section -->
 <section class="py-5">
     <div class="container">
-        <div class="text-center mb-5">
+        <div class="text-center mb-4">
             <h2 class="section-title">Our <span class="text-primary">Products</span></h2>
         </div>
-        <!-- Same product cards as index.html -->
+        <div id="productFilters" class="filter-bar" data-aos="fade-up"></div>
+        <div class="row g-4" id="productsGrid" data-aos="fade-up"></div>
     </div>
 </section>
 
@@ -164,6 +166,8 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="assets/js/script.js"></script>
+    <script type="module" src="assets/js/app-dynamic.js"></script>
+    <script src="assets/js/ui.js"></script>
     <script>
         // Initialize AOS
         AOS.init({
