@@ -55,8 +55,8 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file (keep .env for production)
-# .env
+# dotenv environment variables file (never commit secrets)
+.env
 
 # parcel-bundler cache
 .cache

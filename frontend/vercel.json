@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "outputDirectory": ".",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=300" }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://api.pstuec.com/api/:path*",
+      "permanent": false
+    }
+  ]
+}

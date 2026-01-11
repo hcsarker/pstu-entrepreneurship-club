@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package",
   "name": "pstu-entrepreneurship-club-backend",
   "version": "1.0.0",
   "description": "Backend API for PSTU Entrepreneurship Club website",
@@ -25,6 +26,7 @@
     "compression": "^1.7.4",
     "morgan": "^1.10.0",
     "express-rate-limit": "^7.2.0",
-    "joi": "^17.13.3"
+    "joi": "^17.13.3",
+    "mongodb-memory-server": "^9.5.0"
   }
 }

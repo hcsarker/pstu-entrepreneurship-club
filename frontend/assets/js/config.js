@@ -1,7 +1,8 @@
 // API Configuration
 const API_CONFIG = {
     development: 'http://localhost:5000',
-    production: 'https://backend-mlhh5r2qg-hridoy75hubs-projects.vercel.app'
+    // After custom domain setup, use the API subdomain in production
+    production: 'https://api.pstuec.com'
 };
 
 // Get the API base URL based on environment

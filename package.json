@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package",
   "name": "pstu-entrepreneurship-club",
   "version": "1.0.0",
   "description": "PSTU Entrepreneurship Club Website - Full Stack Application",
