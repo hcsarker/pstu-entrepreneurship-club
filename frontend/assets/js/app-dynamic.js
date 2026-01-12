@@ -47,7 +47,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   initLightbox();
   attachGlobalSearch();
   renderIf('#galleryMasonry', renderGalleryImages);
-  renderIf('#videoGrid', renderYouTubeVideos);
+  if (document.querySelector('#videoGrid')) {
+    await loadYouTubeFromAPI();
+    renderYouTubeVideos(document.querySelector('#videoGrid'));
+  }
 });
 
 function renderIf(selector, fn, extra){ const el=document.querySelector(selector); if(el) fn(el, extra); }
@@ -250,6 +253,23 @@ function initLiteYouTube(){
       node.appendChild(iframe);
     });
   });
+}
+
+async function loadYouTubeFromAPI(){
+  try {
+    const base = window.API_BASE_URL || '';
+    const handle = '@PSTUEntrepreneurshipClub';
+    const url = `${base.replace(/\/$/,'')}/integrations/youtube?handle=${encodeURIComponent(handle)}&max=6`;
+    const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data.items) && data.items.length) {
+        youtubeVideos = data.items.map(it => ({ id: it.id, title: it.title }));
+      }
+    }
+  } catch (e) {
+    console.warn('YouTube fetch failed, using local fallback');
+  }
 }
 
 // ---------- LIGHTBOX ----------

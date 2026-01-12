@@ -97,6 +97,10 @@ const requireDb = (req, res, next) => {
 };
 app.use('/api', requireDb);
 
+// Public integrations that don't require DB
+const youtubeRoutes = require('./routes/youtubeRoutes');
+app.use('/integrations', youtubeRoutes);
+
 connectDatabase();
 
 // Routes
