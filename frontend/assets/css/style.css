@@ -9,20 +9,25 @@
 body {
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
+    margin: 0;
 }
 
 .navbar {
-    background-color: rgba(12, 0, 50, 0.95) !important;
-    transition: all 0.3s ease;
+    background-color: rgba(12, 0, 50, 0.88) !important;
+    backdrop-filter: saturate(160%) blur(8px);
+    -webkit-backdrop-filter: saturate(160%) blur(8px);
+    transition: all 0.25s ease;
     padding-top: 0.35rem;
     padding-bottom: 0.35rem;
+    line-height: 1;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
 .navbar.scrolled {
-    background-color: var(--primary-color) !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    background-color: rgba(12,0,50,0.96) !important;
+    box-shadow: 0 6px 22px -12px rgba(0,0,0,0.45);
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
 }
 
 .navbar-brand {
@@ -33,7 +38,10 @@ body {
 .nav-link {
     font-weight: 500;
     position: relative;
-    margin: 0 8px;
+    margin: 0 6px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.95rem;
+    font-size: 0.97rem;
 }
 
 .nav-link::after {
@@ -44,7 +52,7 @@ body {
     bottom: 0;
     left: 0;
     background-color: var(--secondary-color);
-    transition: width 0.3s ease;
+    transition: width 0.25s ease;
 }
 
 .nav-link:hover::after,
@@ -97,9 +105,15 @@ body {
     border-color: var(--secondary-color);
     color: var(--primary-color);
     font-weight: 600;
-    padding: 10px 25px;
+    padding: 8px 18px;
     border-radius: 50px;
     transition: all 0.3s ease;
+
+/* Tighter navbar button sizing */
+.navbar .btn {
+    padding: 0.35rem 0.9rem;
+    font-size: 0.9rem;
+}
 }
 
 .btn-primary:hover {

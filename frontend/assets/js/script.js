@@ -1,5 +1,20 @@
 // script.js
 
+function setActiveNav(){
+    try {
+        const current = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+        const links = document.querySelectorAll('.navbar-nav .nav-link');
+        links.forEach(l => l.classList.remove('active'));
+        const match = [...links].find(l => (l.getAttribute('href') || '').toLowerCase() === current);
+        if (match) {
+            match.classList.add('active');
+        } else if (current === '' || current === 'index.html') {
+            const home = [...links].find(l => (l.getAttribute('href') || '').toLowerCase() === 'index.html');
+            home && home.classList.add('active');
+        }
+    } catch(err) { /* noop */ }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Website ready!");
 
@@ -22,20 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Set active nav link based on current page
-    try {
-        const current = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-        const links = document.querySelectorAll('.navbar-nav .nav-link');
-        links.forEach(l => l.classList.remove('active'));
-        const match = [...links].find(l => (l.getAttribute('href') || '').toLowerCase() === current);
-        if (match) {
-            match.classList.add('active');
-        } else if (current === '' || current === 'index.html') {
-            const home = [...links].find(l => (l.getAttribute('href') || '').toLowerCase() === 'index.html');
-            home && home.classList.add('active');
-        }
-    } catch(err) { /* noop */ }
+    // Set active nav link based on current page (after header load)
+    setActiveNav();
 });
+
+// When includes are ready, set active nav again
+document.addEventListener('includes:loaded', setActiveNav);
 
 // Membership Form Functionality
 function initMembershipForm() {
