@@ -1,0 +1,8 @@
+{
+  "name": "pstu-ec-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "vercel-build": "node scripts/build-static.js"
+  }
+}
