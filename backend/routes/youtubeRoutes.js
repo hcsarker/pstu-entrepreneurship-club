@@ -8,9 +8,18 @@ async function resolveChannelIdFromHandle(handle) {
   const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
   if (!res.ok) throw new Error(`Failed to fetch channel page: ${res.status}`);
   const html = await res.text();
-  const m = html.match(/"channelId":"(UC[\w-]{22})"/);
-  if (!m) throw new Error('channelId not found for handle');
-  return m[1];
+  // Try various patterns that appear on channel pages
+  const patterns = [
+    /"channelId":"(UC[\w-]{22})"/,
+    /"externalId":"(UC[\w-]{22})"/,
+    /"browseId":"(UC[\w-]{22})"/,
+    /\/channel\/(UC[\w-]{22})/
+  ];
+  for (const re of patterns) {
+    const m = html.match(re);
+    if (m && m[1]) return m[1];
+  }
+  throw new Error('channelId not found for handle');
 }
 
 // Parse minimal fields from YouTube channel feed XML

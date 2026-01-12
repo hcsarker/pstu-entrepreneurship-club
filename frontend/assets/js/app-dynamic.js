@@ -209,7 +209,11 @@ function renderTeam(container){
 function renderGalleryImages(container){
   const html = galleryImages.map(img => `
     <div class="masonry-item">
-      <img src="${img.src}" alt="${img.alt || 'Gallery photo'}" class="lightbox-trigger" loading="lazy" decoding="async" data-lightbox-src="${img.src}">
+      <div class="photo-frame ratio-4x3">
+        <div class="ratio-inner">
+          <img src="${img.src}" alt="${img.alt || 'Gallery photo'}" class="lightbox-trigger" loading="lazy" decoding="async" data-lightbox-src="${img.src}">
+        </div>
+      </div>
       ${img.alt ? `<div class="caption"><i class="fa fa-image"></i> ${img.alt}</div>` : ''}
     </div>
   `).join('');
