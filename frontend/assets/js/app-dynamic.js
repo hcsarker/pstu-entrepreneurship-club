@@ -1,5 +1,5 @@
 // Dynamic rendering + filters + lightbox + simple utilities
-import { events as localEvents, products as localProducts, blogPosts as localBlogPosts, startups as localStartups, teamMembers as localTeam, blogCategories as localBlogCats, productCategories as localProdCats, eventCategories as localEventCats } from './data.js';
+import { events as localEvents, products as localProducts, blogPosts as localBlogPosts, startups as localStartups, teamMembers as localTeam, blogCategories as localBlogCats, productCategories as localProdCats, eventCategories as localEventCats, galleryImages as localGalleryImages, youtubeVideos as localYouTube } from './data.js';
 
 // Attempt fetching from API if available; fallback to local data
 let events = localEvents;
@@ -10,6 +10,8 @@ let teamMembers = localTeam;
 let blogCategories = localBlogCats;
 let productCategories = localProdCats;
 let eventCategories = localEventCats;
+let galleryImages = localGalleryImages;
+let youtubeVideos = localYouTube;
 
 async function tryFetchAll(){
   const base = window.API_BASE_URL || '';
@@ -44,6 +46,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderIf('#teamGrid', renderTeam);
   initLightbox();
   attachGlobalSearch();
+  renderIf('#galleryMasonry', renderGalleryImages);
+  renderIf('#videoGrid', renderYouTubeVideos);
 });
 
 function renderIf(selector, fn, extra){ const el=document.querySelector(selector); if(el) fn(el, extra); }
@@ -196,6 +200,56 @@ function renderTeam(container){
       </div>
     </div>
   `).join('');
+}
+
+// ---------- GALLERY (Images) ----------
+function renderGalleryImages(container){
+  const html = galleryImages.map(img => `
+    <div class="masonry-item">
+      <img src="${img.src}" alt="${img.alt || 'Gallery photo'}" class="lightbox-trigger" loading="lazy" decoding="async" data-lightbox-src="${img.src}">
+      ${img.alt ? `<div class="caption"><i class="fa fa-image"></i> ${img.alt}</div>` : ''}
+    </div>
+  `).join('');
+  container.innerHTML = html || '<div class="text-muted">No gallery images available</div>';
+}
+
+// ---------- GALLERY (YouTube Videos) ----------
+function renderYouTubeVideos(container){
+  const cards = youtubeVideos.map((v, i)=>{
+    const thumb = `https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`;
+    return `
+      <div class="col-md-6" data-aos="fade-up" ${i?`data-aos-delay="${i*100}"`:''}>
+        <div class="video-card">
+          <div class="yt-lite" data-id="${v.id}">
+            <div class="yt-thumbnail" style="background-image:url('${thumb}')"></div>
+            <button class="yt-play" aria-label="Play ${v.title}"></button>
+          </div>
+          <h6 class="mt-2">${v.title}</h6>
+        </div>
+      </div>`;
+  }).join('');
+  container.innerHTML = cards || '<div class="text-muted">No videos available</div>';
+  initLiteYouTube();
+}
+
+function initLiteYouTube(){
+  const nodes = document.querySelectorAll('.yt-lite');
+  nodes.forEach(node => {
+    if (node.dataset.bound === '1') return;
+    node.dataset.bound = '1';
+    node.addEventListener('click', () => {
+      const id = node.getAttribute('data-id');
+      const iframe = document.createElement('iframe');
+      iframe.setAttribute('width', '560');
+      iframe.setAttribute('height', '315');
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+      node.classList.add('activated');
+      node.appendChild(iframe);
+    });
+  });
 }
 
 // ---------- LIGHTBOX ----------

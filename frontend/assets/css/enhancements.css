@@ -66,6 +66,12 @@ body.aos-disabled [data-aos][style] { opacity: 1 !important; transform: none !im
 .masonry-item { break-inside:avoid; margin-bottom:1rem; position:relative; overflow:hidden; border-radius:16px; cursor:pointer; }
 .masonry-item img { width:100%; display:block; border-radius:inherit; transition:transform 1s ease; }
 .masonry-item:hover img { transform:scale(1.08); }
+/* Fancy overlay + caption */
+.masonry-item::before { content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.55) 100%); opacity:0; transition:opacity .45s ease; border-radius:inherit; }
+.masonry-item .caption { position:absolute; left:0; right:0; bottom:10px; color:#fff; padding:.6rem .9rem; font-size:.9rem; line-height:1.2; opacity:0; transform:translateY(10px); transition:.45s ease; display:flex; align-items:center; gap:.5rem; }
+.masonry-item .caption i { font-size:.9rem; opacity:.9; }
+.masonry-item:hover::before, .masonry-item:focus-within::before { opacity:1; }
+.masonry-item:hover .caption, .masonry-item:focus-within .caption { opacity:1; transform:translateY(0); }
 
 /* Lightbox */
 #lightboxOverlay { position:fixed; inset:0; background:rgba(0,0,0,.75); display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:.4s; z-index:1200; backdrop-filter:blur(4px); }
@@ -87,6 +93,19 @@ figure { margin:0; }
 .ratio-1x1 { position:relative; width:100%; padding-top:100%; }
 .ratio-4x3 { position:relative; width:100%; padding-top:75%; }
 .ratio-inner > img, .ratio-inner > .ratio-content, .ratio-16x9 > img, .ratio-1x1 > img, .ratio-4x3 > img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; }
+
+/* Modern video cards + Lite YouTube */
+.video-card { background:var(--ec-card-bg); backdrop-filter:var(--ec-blur); border:1px solid rgba(255,255,255,.45); border-radius:16px; overflow:hidden; box-shadow:var(--ec-shadow-sm); transition:.5s cubic-bezier(.34,1.56,.51,1); }
+.video-card:hover { transform:translateY(-6px); box-shadow:var(--ec-shadow-lg); }
+.video-card h6 { padding:.75rem .75rem 1rem; margin:0; }
+
+.yt-lite { position:relative; background-color:#000; cursor:pointer; border-radius:16px 16px 0 0; overflow:hidden; }
+.yt-lite::before { content:""; display:block; padding-bottom:56.25%; background:#000; }
+.yt-lite > .yt-thumbnail { position:absolute; inset:0; background-position:center; background-size:cover; filter:saturate(105%); transform:scale(1.02); transition:transform 1s ease; }
+.yt-lite:hover > .yt-thumbnail { transform:scale(1.07); }
+.yt-lite > .yt-play { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:68px; height:68px; border-radius:50%; border:none; display:grid; place-items:center; background:var(--ec-gradient-accent); color:#041018; box-shadow:0 12px 30px -10px rgba(0,243,185,.6); }
+.yt-lite > .yt-play::before { content:"\25BA"; font-size:28px; margin-left:4px; }
+.yt-lite.activated::before, .yt-lite.activated > .yt-thumbnail, .yt-lite.activated > .yt-play { display:none; }
 
 /* Constrain logo images inside nav/footer */
 .navbar-brand img { height:28px; width:auto; }

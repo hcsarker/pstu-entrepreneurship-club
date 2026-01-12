@@ -41,6 +41,25 @@ export const teamMembers = [
   { id:306, name:'Maliha Noor', role:'Marketing Lead', department:'BBA', avatar:'https://randomuser.me/api/portraits/women/12.jpg', socials:{dribbble:'#'} }
 ];
 
+// GALLERY: Local asset images for the photo gallery
+export const galleryImages = [
+  { src: 'assets/images/547681134_122180583572564989_6191046846726229010_n.jpg', alt: 'Club event moment 1' },
+  { src: 'assets/images/552885768_122181443138564989_1335234260207935214_n.jpg', alt: 'Club event moment 2' },
+  { src: 'assets/images/553295222_122181595376564989_3669177668535221672_n.jpg', alt: 'Club event moment 3' },
+  { src: 'assets/images/554555010_122182089860564989_3791081792842274683_n.jpg', alt: 'Club event moment 4' },
+  { src: 'assets/images/571022729_122186224298564989_4893407098330538923_n.jpg', alt: 'Club event moment 5' },
+  { src: 'assets/images/590877411_122191041788564989_1420952966212735132_n.jpg', alt: 'Club event moment 6' },
+  { src: 'assets/images/Digital marketing course.jpg', alt: 'Workshop snapshot' },
+  { src: 'assets/images/aboutsection.jpg', alt: 'Club members group' }
+];
+
+// VIDEOS: YouTube embeds (replace ids with club channel’s videos)
+export const youtubeVideos = [
+  { id: 'dQw4w9WgXcQ', title: 'Event Highlights' },
+  { id: '3fumBcGZQK0', title: 'Pitch Competition Recap' },
+  { id: 'lTTajzrSkCw', title: 'Workshop Moments' }
+];
+
 // Simple category extraction helpers
 export const blogCategories = [...new Set(blogPosts.map(p => p.category))];
 export const productCategories = [...new Set(products.map(p => p.category))];

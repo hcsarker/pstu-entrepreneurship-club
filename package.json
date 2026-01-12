@@ -9,6 +9,7 @@
     "install-backend": "cd backend && npm install",
     "install-frontend": "echo 'Frontend uses static files - no installation needed'",
     "build": "echo 'Building project...' && npm run install-backend",
+    "vercel-build": "node frontend/scripts/build-static.js",
     "test": "echo 'No tests specified'"
   },
   "keywords": [
