@@ -1,20 +1,8 @@
 // UI enhancements: theme toggle, counter animation, intersection observers
 (function(){
-  const themeBtn = document.getElementById('themeToggle');
-  const stored = localStorage.getItem('pec-theme');
-  if(stored === 'dark') document.body.classList.add('dark-mode');
-  updateThemeIcon();
-  function toggleTheme(){
-    document.body.classList.toggle('dark-mode');
-    localStorage.setItem('pec-theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-    updateThemeIcon();
-  }
-  function updateThemeIcon(){
-    if(!themeBtn) return; const icon = themeBtn.querySelector('i'); if(!icon) return;
-    if(document.body.classList.contains('dark-mode')) { icon.className = 'fas fa-sun'; themeBtn.setAttribute('aria-label','Switch to light mode'); }
-    else { icon.className = 'fas fa-moon'; themeBtn.setAttribute('aria-label','Switch to dark mode'); }
-  }
-  themeBtn && themeBtn.addEventListener('click', toggleTheme);
+  // Dark theme disabled: ensure it's cleared
+  document.body.classList.remove('dark-mode');
+  try { localStorage.removeItem('pec-theme'); } catch(e) {}
   const counters = document.querySelectorAll('.counter-number[data-count]');
   const counterObserver = new IntersectionObserver(entries => { entries.forEach(entry => { if(entry.isIntersecting) { animateCounter(entry.target); entry.target.dataset.animated='true'; counterObserver.unobserve(entry.target); } }); }, { threshold: 0.5 });
   counters.forEach(c => counterObserver.observe(c));
@@ -22,4 +10,19 @@
   const revealEls = document.querySelectorAll('.fade-in-up');
   const revealObserver = new IntersectionObserver(entries => { entries.forEach(entry => { if(entry.isIntersecting){ entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); } }); }, { threshold: 0.25 });
   revealEls.forEach(el=>revealObserver.observe(el));
+
+  // AOS fallback: if AOS failed to load, reveal content immediately
+  try {
+    var aosMissing = (typeof window.AOS === 'undefined') || (typeof window.AOS.init !== 'function');
+    if (aosMissing) {
+      document.body.classList.add('aos-disabled');
+      document.querySelectorAll('[data-aos]').forEach(function(el){
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.removeAttribute('data-aos');
+        el.removeAttribute('data-aos-delay');
+        el.removeAttribute('data-aos-duration');
+      });
+    }
+  } catch(e) { /* no-op */ }
 })();

@@ -4,8 +4,26 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href="https://pstuec.com/blog.html" />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#0c0032" />
     <title>Blog - PSTU Entrepreneurship Club</title>
     <meta name="description" content="Read articles, tips, and stories from PSTU Entrepreneurship Club on startups, funding, product building, and innovation.">
+    <meta property="og:title" content="Blog - PSTU Entrepreneurship Club" />
+    <meta property="og:description" content="Read articles, tips, and stories from PSTU Entrepreneurship Club on startups, funding, product building, and innovation." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://pstuec.com/blog.html" />
+    <meta property="og:image" content="https://pstuec.com/assets/images/logo.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="//unpkg.com">
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -13,11 +31,28 @@
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/enhancements.css" />
     <link rel="icon" href="assets/images/favicon.png" type="image/png" />
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Blog",
+            "name": "PSTU Entrepreneurship Club Blog",
+            "url": "https://pstuec.com/blog.html",
+            "publisher": {
+                "@type": "Organization",
+                "name": "PSTU Entrepreneurship Club",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://pstuec.com/assets/images/logo.jpg"
+                }
+            }
+        }
+        </script>
 </head>
 
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" role="navigation" aria-label="Primary">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.html">
                 <img src="assets/images/logo.jpg" alt="PSTU EC Logo" height="40" class="me-2 d-inline-block align-top">
@@ -28,23 +63,22 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto enhanced-nav">
-                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
                     <li class="nav-item"><a class="nav-link" href="team.html">Team</a></li>
                     <li class="nav-item"><a class="nav-link" href="startups.html">Startups</a></li>
                     <li class="nav-item"><a class="nav-link" href="store.html">Store</a></li>
                     <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="blog.html">Blog</a></li>
                 </ul>
                 <a href="join.html" class="btn btn-primary ms-lg-3">Join Now</a>
-                <button id="themeToggle" type="button" class="ms-2" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
             </div>
         </div>
     </nav>
 
     <!-- Blog Hero Section -->
-    <section class="hero-section text-white position-relative"
+    <section id="main" class="hero-section text-white position-relative"
         style="background: linear-gradient(rgba(12,0,50,0.85), rgba(12,0,50,0.85)), url('assets/images/blog-hero.jpg') center/cover no-repeat;">
         <div class="container py-5">
             <div class="row py-5">
@@ -98,10 +132,9 @@
 
                     <div class="mt-4">
                         <a href="https://www.facebook.com/profile.php?id=61566949692188" class="social-icon me-2" target="_blank" rel="noopener noreferrer" aria-label="PSTU Entrepreneurship Club on Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-icon me-2"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-icon me-2"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-icon me-2"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="social-icon me-2"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/club_pstu_entrepreneurship/" class="social-icon me-2" target="_blank" rel="noopener noreferrer" aria-label="PSTU Entrepreneurship Club on Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/pstuentrepreneurshipclub" class="social-icon me-2" target="_blank" rel="noopener noreferrer" aria-label="PSTU Entrepreneurship Club on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.youtube.com/@PSTUEntrepreneurshipClub" class="social-icon me-2" target="_blank" rel="noopener noreferrer" aria-label="PSTU Entrepreneurship Club on YouTube"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4 col-lg-2">
@@ -151,14 +184,14 @@
     </footer>
 
     <!-- Back to Top Button -->
-    <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+    <a href="#" class="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up" aria-hidden="true"></i></a>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <script src="assets/js/script.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script defer src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script defer src="assets/js/script.js"></script>
     <script type="module" src="assets/js/app-dynamic.js"></script>
-    <script src="assets/js/ui.js"></script>
+    <script defer src="assets/js/ui.js"></script>
     <script>
         // Initialize AOS
         AOS.init({
