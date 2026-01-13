@@ -7,6 +7,7 @@ export const events = [
   { id:3, title:'Digital Marketing Workshop', date:'2025-07-20', location:'Computer Lab', type:'upcoming', category:'Workshop', cover:'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=70', excerpt:'Hands-on growth & funnel strategies.' },
   { id:4, title:'Innovation Summit 2024', date:'2024-02-10', location:'Main Hall', type:'past', category:'Conference', cover:'https://images.unsplash.com/photo-1485217988980-11786ced9454?auto=format&fit=crop&w=800&q=70', excerpt:'Flagship annual innovation gathering.' },
   { id:5, title:'Green Tech Hackathon', date:'2024-11-12', location:'Innovation Lab', type:'past', category:'Hackathon', cover:'https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=800&q=70', excerpt:'48-hour sustainability challenge.' }
+  { id:6, title:'Entrepreneurship Summit 2025', date:'2025-08-10', location:'Main Hall', type:'upcoming', category:'Conference', cover:'https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=800&q=70', excerpt:'Flagship summit bringing founders, mentors, and investors.' }
 ];
 
 export const products = [
