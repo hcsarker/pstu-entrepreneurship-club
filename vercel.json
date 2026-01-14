@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "buildCommand": "node frontend/scripts/build-static.js",
   "outputDirectory": "frontend/public",
   "headers": [
     {

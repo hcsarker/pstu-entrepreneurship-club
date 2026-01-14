@@ -25,4 +25,50 @@
       });
     }
   } catch(e) { /* no-op */ }
+
+  // Mobile-only sponsor marquee: subtle auto-scroll with pause on interaction
+  try {
+    const mq = window.matchMedia('(max-width: 576px)');
+    const grid = document.querySelector('.sponsor-grid');
+    if (grid && mq.matches) {
+      grid.classList.add('is-marquee');
+      // Duplicate children for seamless loop
+      const items = Array.from(grid.children);
+      items.forEach(node => grid.appendChild(node.cloneNode(true)));
+
+      let rafId = null, last = null; const speed = 24; // px per second
+      let paused = false; let pauseTimer = null;
+      function tick(ts){
+        if(last==null) last = ts;
+        const dt = (ts - last) / 1000; // seconds
+        last = ts;
+        if(!paused){
+          grid.scrollLeft += speed * dt;
+          const half = grid.scrollWidth / 2;
+          if (grid.scrollLeft >= half) {
+            grid.scrollLeft -= half;
+          }
+        }
+        rafId = requestAnimationFrame(tick);
+      }
+      function pause(ms=2500){
+        paused = true;
+        clearTimeout(pauseTimer);
+        pauseTimer = setTimeout(()=>{ paused = false; }, ms);
+      }
+      ['touchstart','pointerdown','mouseenter','wheel','keydown'].forEach(evt=>{
+        grid.addEventListener(evt, ()=> pause(3000), { passive: true });
+      });
+      // If user manually scrolls, pause briefly
+      grid.addEventListener('scroll', ()=> pause(1500), { passive: true });
+
+      rafId = requestAnimationFrame(tick);
+
+      // Clean up on resize above breakpoint
+      const onChange = (e)=>{
+        if(!e.matches && rafId){ cancelAnimationFrame(rafId); rafId = null; }
+      };
+      mq.addEventListener ? mq.addEventListener('change', onChange) : mq.addListener(onChange);
+    }
+  } catch(e) { /* ignore marquee errors */ }
 })();

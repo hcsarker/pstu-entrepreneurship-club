@@ -3,23 +3,30 @@
 echo "🚀 PSTU Entrepreneurship Club - Deployment Script"
 echo "=================================================="
 
-# Check if user wants to deploy
-read -p "Deploy to Vercel? (y/n): " deploy_choice
+command -v vercel >/dev/null 2>&1 || { echo "❌ Vercel CLI not found. Install with: npm i -g vercel"; exit 1; }
 
-if [ "$deploy_choice" = "y" ] || [ "$deploy_choice" = "Y" ]; then
-    echo "📦 Deploying Backend..."
-    cd backend
-    vercel --prod
-    
-    echo "📦 Deploying Frontend..."
-    cd ../frontend
-    vercel --prod
-    
+set -e
+
+echo "📦 Deploying Backend (linked project expected)..."
+pushd backend >/dev/null
+# Ensure this folder is linked to the correct Vercel project first using: vercel link
+vercel --prod --yes
+popd >/dev/null
+
+echo "📦 Deploying Frontend (linked project expected)..."
+pushd frontend >/dev/null
+# Ensure this folder is linked to the correct Vercel project first using: vercel link
+vercel --prod --yes
+popd >/dev/null
+
+echo "✅ Deployment Complete!"
+echo "📝 Remember:"
+echo "   1) Backend env vars set in its Vercel project"
+echo "   2) Frontend points to your API domain (assets/js/config.js)"
+echo "   3) Test both live URLs"
+
+
+npx -y vercel@latest --cwd backend --prod --yes
+ npx -y vercel@latest --cwd frontend --prod --yes
+ npx -y vercel@latest whoami
     echo "✅ Deployment Complete!"
-    echo "📝 Don't forget to:"
-    echo "   1. Update environment variables in Vercel dashboard"
-    echo "   2. Update API URL in frontend/assets/js/config.js"
-    echo "   3. Test your live application"
-else
-    echo "❌ Deployment cancelled"
-fi

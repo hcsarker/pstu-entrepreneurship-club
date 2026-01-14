@@ -17,3 +17,11 @@ function getApiBaseUrl() {
 
 // Export for use in other scripts
 window.API_BASE_URL = getApiBaseUrl();
+
+// Optional: Event-specific register URL overrides (paste your Google Forms URLs here)
+// Key by event slug or numeric id
+window.EVENT_REGISTER_URLS = {
+    // Example:
+    // 'summit-2025': 'https://forms.gle/your-real-google-form',
+    // 7: 'https://forms.gle/another-form-id'
+};
