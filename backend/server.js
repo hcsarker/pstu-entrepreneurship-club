@@ -18,6 +18,7 @@ const corsOptions = {
         'https://frontend-q3lx12ext-hridoy75hubs-projects.vercel.app',
         // Production domains
         'https://www.pstuec.com',
+        'https://api.pstuec.com',
         'https://pstuec.com'
     ],
     credentials: true,
@@ -44,6 +45,14 @@ const apiLimiter = rateLimit({
     legacyHeaders: false
 });
 app.use('/api', apiLimiter);
+// Env check that bypasses DB gate (placed before requireDb)
+app.get('/api/env-check', (req, res) => {
+    res.json({
+        hasMongoUri: !!process.env.MONGO_URI,
+        nodeEnv: process.env.NODE_ENV || 'development',
+        vercel: !!process.env.VERCEL
+    });
+});
 
 const PORT = process.env.PORT || 5000;
 
@@ -106,8 +115,11 @@ connectDatabase();
 // Routes
 const memberRoutes = require('./routes/memberRoutes');
 const contentRoutes = require('./routes/contentRoutes');
+const registrationRoutes = require('./routes/registrationRoutes');
+const api = require('./api');
 app.use('/api', memberRoutes);
 app.use('/api/content', contentRoutes);
+app.use('/api', registrationRoutes);
 
 // Default route
 app.get('/', (req, res) => {

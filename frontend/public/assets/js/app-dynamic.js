@@ -343,7 +343,8 @@ function isUpcoming(d){ return new Date(d).getTime() >= Date.now(); }
 function getRegisterUrl(e){
   const overrides = (window.EVENT_REGISTER_URLS || {});
   const key = e.slug || e.id;
-  return overrides[key] || e.registerUrl || '';
+  // Always use unified form unless an explicit override is defined
+  return overrides[key] || `register.html?event=${encodeURIComponent(key)}`;
 }
 
 // ---------- PAST EVENTS: Year Filters + Pagination ----------

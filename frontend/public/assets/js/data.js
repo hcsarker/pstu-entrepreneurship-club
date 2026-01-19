@@ -2,16 +2,72 @@
 // In future, can be replaced by API fetch (e.g., /api/...)
 
 export const events = [
-  { id:1, slug:'startup-bootcamp-2025', title:'Startup Bootcamp 2025', date:'2025-06-15', location:'PSTU Auditorium', type:'upcoming', category:'Workshop', cover:'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=70', excerpt:'3-day intensive idea to MVP experience.' },
-  { id:2, slug:'annual-pitch-competition-2025', title:'Annual Pitch Competition', date:'2025-07-05', location:'Incubation Center', type:'upcoming', category:'Competition', cover:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=70', excerpt:'Pitch to investors & win seed credits.' },
-  { id:3, slug:'digital-marketing-workshop-2025', title:'Digital Marketing Workshop', date:'2025-07-20', location:'Computer Lab', type:'upcoming', category:'Workshop', cover:'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=70', excerpt:'Hands-on growth & funnel strategies.' },
-  { id:4, slug:'innovation-summit-2024', title:'Innovation Summit 2024', date:'2024-02-10', location:'Main Hall', type:'past', category:'Conference', cover:'https://images.unsplash.com/photo-1485217988980-11786ced9454?auto=format&fit=crop&w=800&q=70', excerpt:'Flagship annual innovation gathering.' },
-  { id:5, slug:'green-tech-hackathon-2024', title:'Green Tech Hackathon', date:'2024-11-12', location:'Innovation Lab', type:'past', category:'Hackathon', cover:'https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=800&q=70', excerpt:'48-hour sustainability challenge.' },
+  { id:1, slug:'startup-bootcamp-2025', title:'Startup Bootcamp 2025', date:'2025-06-15', location:'PSTU Auditorium', type:'upcoming', category:'Workshop', cover:'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=70', excerpt:'3-day intensive idea to MVP experience.',
+    agenda:[
+      { time:'Day 1 — 09:30', item:'Orientation & Team Formation' },
+      { time:'Day 1 — 11:00', item:'Problem Discovery & Validation' },
+      { time:'Day 2 — 10:00', item:'MVP Scoping & Prototyping' },
+      { time:'Day 3 — 15:00', item:'Pitch Practice & Feedback' }
+    ],
+    speakers:[
+      { name:'Arif Hasan', role:'Startup Coach', avatar:'https://randomuser.me/api/portraits/men/41.jpg' },
+      { name:'Nusrat Jahan', role:'Product Mentor', avatar:'https://randomuser.me/api/portraits/women/41.jpg' }
+    ],
+    gallery:[
+      'https://images.unsplash.com/photo-1529336953121-4fdc1671daf5?auto=format&fit=crop&w=800&q=70',
+      'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=70'
+    ]
+  },
+  { id:2, slug:'annual-pitch-competition-2025', title:'Annual Pitch Competition', date:'2025-07-05', location:'Incubation Center', type:'upcoming', category:'Competition', cover:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=70', excerpt:'Pitch to investors & win seed credits.',
+    agenda:[
+      { time:'14:00', item:'Founder Check-in & Briefing' },
+      { time:'15:00', item:'Top 10 Pitches' },
+      { time:'17:30', item:'Jury Deliberation' },
+      { time:'18:00', item:'Awards & Networking' }
+    ],
+    speakers:[
+      { name:'Fahim Rahman', role:'Angel Investor', avatar:'https://randomuser.me/api/portraits/men/22.jpg' },
+      { name:'Rupa Sultana', role:'VC Analyst', avatar:'https://randomuser.me/api/portraits/women/22.jpg' }
+    ]
+  },
+  { id:3, slug:'digital-marketing-workshop-2025', title:'Digital Marketing Workshop', date:'2025-07-20', location:'Computer Lab', type:'upcoming', category:'Workshop', cover:'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=70', excerpt:'Hands-on growth & funnel strategies.',
+    agenda:[
+      { time:'10:00', item:'Growth Fundamentals' },
+      { time:'11:30', item:'Paid vs. Organic' },
+      { time:'14:30', item:'Conversion Funnels' }
+    ]
+  },
+  { id:4, slug:'innovation-summit-2024', title:'Innovation Summit 2024', date:'2024-02-10', location:'Main Hall', type:'past', category:'Conference', cover:'https://images.unsplash.com/photo-1485217988980-11786ced9454?auto=format&fit=crop&w=800&q=70', excerpt:'Flagship annual innovation gathering.',
+    gallery:[
+      'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=70',
+      'https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=70'
+    ]
+  },
+  { id:5, slug:'green-tech-hackathon-2024', title:'Green Tech Hackathon', date:'2024-11-12', location:'Innovation Lab', type:'past', category:'Hackathon', cover:'https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=800&q=70', excerpt:'48-hour sustainability challenge.',
+    agenda:[
+      { time:'09:00', item:'Kickoff & Teaming' },
+      { time:'10:00', item:'Hacking Starts' },
+      { time:'22:00', item:'Midnight Checkpoint' },
+      { time:'Next Day 16:00', item:'Final Demos' }
+    ]
+  },
   { id:6, title:'PSTU Entrepreneurship Summit 2025', slug:'summit-2025', date:'2025-08-10', location:'Main Hall', type:'past', category:'Summit', cover:'https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=800&q=70', excerpt:'Flagship summit bringing founders, mentors, and investors.', detailsUrl:'summit-2025.html' },
   // New sample events for richer categories
-  { id:7, slug:'design-thinking-seminar-2026', title:'Design Thinking Seminar', date:'2026-01-30', location:'Seminar Room A', type:'upcoming', category:'Seminar', cover:'https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=800&q=70', excerpt:'Rapid ideation and empathy mapping workshop for beginners.', registerUrl:'https://example.com/register/design-thinking' },
-  { id:8, slug:'campus-startup-meetup-2026', title:'Campus Startup Meetup', date:'2026-02-20', location:'Cafeteria Lawn', type:'upcoming', category:'Meetup', cover:'https://images.unsplash.com/photo-1515165562835-c3b8c2e39a2b?auto=format&fit=crop&w=800&q=70', excerpt:'Casual networking with founders, mentors, and peers.', registerUrl:'https://example.com/register/startup-meetup' },
-  { id:9, slug:'founders-fireside-seminar-2025', title:'Founders Fireside Seminar', date:'2025-10-12', location:'Auditorium 2', type:'past', category:'Seminar', cover:'https://images.unsplash.com/photo-1523246192391-077b032b8b62?auto=format&fit=crop&w=800&q=70', excerpt:'Stories from alumni founders on scaling lessons.' }
+  { id:7, slug:'design-thinking-seminar-2026', title:'Design Thinking Seminar', date:'2026-01-30', location:'Seminar Room A', type:'upcoming', category:'Seminar', cover:'https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=800&q=70', excerpt:'Rapid ideation and empathy mapping workshop for beginners.', registerUrl:'https://example.com/register/design-thinking',
+    speakers:[
+      { name:'Imran Hossain', role:'Design Researcher', avatar:'https://randomuser.me/api/portraits/men/58.jpg' }
+    ]
+  },
+  { id:8, slug:'campus-startup-meetup-2026', title:'Campus Startup Meetup', date:'2026-02-20', location:'Cafeteria Lawn', type:'upcoming', category:'Meetup', cover:'https://images.unsplash.com/photo-1515165562835-c3b8c2e39a2b?auto=format&fit=crop&w=800&q=70', excerpt:'Casual networking with founders, mentors, and peers.', registerUrl:'https://example.com/register/startup-meetup',
+    gallery:[
+      'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=70'
+    ]
+  },
+  { id:9, slug:'founders-fireside-seminar-2025', title:'Founders Fireside Seminar', date:'2025-10-12', location:'Auditorium 2', type:'past', category:'Seminar', cover:'https://images.unsplash.com/photo-1523246192391-077b032b8b62?auto=format&fit=crop&w=800&q=70', excerpt:'Stories from alumni founders on scaling lessons.',
+    speakers:[
+      { name:'Shahriar Bin Karim', role:'Founder, AgriTech BD', avatar:'https://randomuser.me/api/portraits/men/15.jpg' }
+    ]
+  }
 ];
 
 export const products = [
