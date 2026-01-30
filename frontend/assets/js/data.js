@@ -94,12 +94,19 @@ export const startups = [
 ];
 
 export const teamMembers = [
-  { id:301, name:'Rahim Khan', role:'President', department:'CSE', avatar:'https://randomuser.me/api/portraits/men/32.jpg', socials:{linkedin:'#', facebook:'#'} },
-  { id:302, name:'Tasnim Ahmed', role:'Vice President', department:'BBA', avatar:'https://randomuser.me/api/portraits/women/44.jpg', socials:{linkedin:'#'} },
-  { id:303, name:'Sajid Rahman', role:'General Secretary', department:'EEE', avatar:'https://randomuser.me/api/portraits/men/76.jpg', socials:{github:'#'} },
-  { id:304, name:'Fatima Akter', role:'Head of Events', department:'Agri', avatar:'https://randomuser.me/api/portraits/women/68.jpg', socials:{instagram:'#'} },
-  { id:305, name:'Shuvo Das', role:'Tech Lead', department:'CSE', avatar:'https://randomuser.me/api/portraits/men/12.jpg', socials:{github:'#'} },
-  { id:306, name:'Maliha Noor', role:'Marketing Lead', department:'BBA', avatar:'https://randomuser.me/api/portraits/women/12.jpg', socials:{dribbble:'#'} }
+  { id:301, name:'Rahim Khan', role:'President', department:'CSE', avatar:'https://randomuser.me/api/portraits/men/32.jpg', socials:{linkedin:'#', facebook:'#'}, session:'2024-2025', committee:'Executive' },
+  { id:302, name:'Tasnim Ahmed', role:'Vice President', department:'BBA', avatar:'https://randomuser.me/api/portraits/women/44.jpg', socials:{linkedin:'#'}, session:'2024-2025', committee:'Executive' },
+  { id:303, name:'Sajid Rahman', role:'General Secretary', department:'EEE', avatar:'https://randomuser.me/api/portraits/men/76.jpg', socials:{github:'#'}, session:'2023-2024', committee:'Operations' },
+  { id:304, name:'Fatima Akter', role:'Head of Events', department:'Agri', avatar:'https://randomuser.me/api/portraits/women/68.jpg', socials:{instagram:'#'}, session:'2024-2025', committee:'Events' },
+  { id:305, name:'Shuvo Das', role:'Tech Lead', department:'CSE', avatar:'https://randomuser.me/api/portraits/men/12.jpg', socials:{github:'#'}, session:'2023-2024', committee:'Tech' },
+  { id:306, name:'Maliha Noor', role:'Marketing Lead', department:'BBA', avatar:'https://randomuser.me/api/portraits/women/12.jpg', socials:{dribbble:'#'}, session:'2024-2025', committee:'Marketing' }
+];
+
+// Faculty advisors as a separate dataset to enable filtering like team members
+export const advisors = [
+  { id:401, name:'Dr. Arif Hossain', role:'Advisor', department:'CSE', avatar:'https://randomuser.me/api/portraits/men/41.jpg', bio:'Advisor, Innovation & Technology', session:'2024-2025' },
+  { id:402, name:'Dr. Shama Nasrin', role:'Advisor', department:'BBA', avatar:'https://randomuser.me/api/portraits/women/51.jpg', bio:'Advisor, Entrepreneurship & Marketing', session:'2024-2025' },
+  { id:403, name:'Dr. Mahmud Alam', role:'Advisor', department:'EEE', avatar:'https://randomuser.me/api/portraits/men/7.jpg', bio:'Advisor, Operations & Events', session:'2023-2024' }
 ];
 
 // GALLERY: Local asset images for the photo gallery

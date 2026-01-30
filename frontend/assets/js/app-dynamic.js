@@ -1,5 +1,5 @@
 // Dynamic rendering + filters + lightbox + simple utilities
-import { events as localEvents, products as localProducts, blogPosts as localBlogPosts, startups as localStartups, teamMembers as localTeam, blogCategories as localBlogCats, productCategories as localProdCats, eventCategories as localEventCats, galleryImages as localGalleryImages, youtubeVideos as localYouTube } from './data.js';
+import { events as localEvents, products as localProducts, blogPosts as localBlogPosts, startups as localStartups, teamMembers as localTeam, advisors as localAdvisors, blogCategories as localBlogCats, productCategories as localProdCats, eventCategories as localEventCats, galleryImages as localGalleryImages, youtubeVideos as localYouTube } from './data.js';
 
 // Attempt fetching from API if available; fallback to local data
 let events = localEvents;
@@ -7,6 +7,7 @@ let products = localProducts;
 let blogPosts = localBlogPosts;
 let startups = localStartups;
 let teamMembers = localTeam;
+let advisors = localAdvisors;
 let blogCategories = localBlogCats;
 let productCategories = localProdCats;
 let eventCategories = localEventCats;
@@ -47,7 +48,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderIf('#blogPostsGrid', renderBlogPosts);
   renderIf('#blogCategoryFilters', renderBlogCategories);
   renderIf('#startupsGrid', renderStartups);
-  renderIf('#teamGrid', renderTeam);
+  renderIf('#teamHeroFilters', renderTeamFilters);
+  renderIf('#advisorHeroFilters', renderAdvisorFilters);
   initLightbox();
   attachGlobalSearch();
   renderIf('#galleryMasonry', renderGalleryImages);
@@ -87,6 +89,93 @@ function renderEvents(container, { scope='upcoming', category }={}) {
     </div>
   `).join('') || emptyState('No events found');
   // Make dynamically inserted items visible (works even if IntersectionObserver missed them)
+  revealNow(container);
+}
+
+// ---------- TEAM Filters + rendering ----------
+function renderTeamFilters(container){
+  // derive available sessions from teamMembers (use the session label as-is)
+  const sessions = [...new Set(teamMembers.map(t=>t.session).filter(Boolean))].sort().reverse();
+  const defaultSession = sessions.length ? sessions[0] : `
+${new Date().getFullYear()}`;
+  container.innerHTML = `
+    <div class="d-flex gap-2 align-items-center mb-3">
+      <div class="fw-bold me-2">Session:</div>
+      <select id="teamSessionSelect" class="form-select form-select-sm" style="width:auto">
+        ${sessions.length ? sessions.map(s=>`<option value="${s}">${s}</option>`).join('') : `<option value="${defaultSession}">${defaultSession}</option>`}
+      </select>
+    </div>`;
+  // render selected session members into the grid
+  const grid = document.querySelector('#teamGrid');
+  const select = container.querySelector('#teamSessionSelect');
+  select.value = defaultSession;
+  select.addEventListener('change', ()=> applyTeamFilters(grid, select.value));
+  applyTeamFilters(grid, select.value);
+}
+
+function applyTeamFilters(container, session){
+  const list = teamMembers.filter(t => (t.session && t.session === session));
+  if (!list.length) {
+    container.innerHTML = `<div class="col-12"><div class="glass-card p-4 text-center"><h3 class="mb-1">Coming soon</h3><p class="text-muted mb-0">Executive committee for ${session} will be announced soon.</p></div></div>`;
+  } else {
+    container.innerHTML = list.map(m => `
+      <div class="col-6 col-md-4 col-lg-3 fade-in-up">
+        <div class="feature-card text-center h-100 p-3">
+          <img src="${m.avatar}" alt="${m.name}" class="rounded-circle mb-3" style="width:80px;height:80px;object-fit:cover;">
+          <h6 class="mb-1">${m.name}</h6>
+          <p class="text-primary small mb-1">${m.role}</p>
+          <p class="text-muted small mb-2">${m.department}</p>
+        </div>
+      </div>`).join('');
+  }
+  revealNow(container);
+}
+
+function renderAdvisors(container){
+  container.innerHTML = advisors.map(a => `
+    <div class="col-6 col-md-4 col-lg-3 fade-in-up">
+      <div class="feature-card text-center h-100 p-3">
+        <img src="${a.avatar}" alt="${a.name}" class="rounded-circle mb-3" style="width:80px;height:80px;object-fit:cover;">
+        <h6 class="mb-1">${a.name}</h6>
+        <p class="text-primary small mb-1">${a.department}</p>
+        <p class="text-muted small mb-2">${a.bio}</p>
+      </div>
+    </div>`).join('') || '<div class="col-12 text-muted">No advisors available</div>';
+  revealNow(container);
+}
+
+function renderAdvisorFilters(container){
+  const sessions = [...new Set(advisors.map(a=>a.session).filter(Boolean))].sort().reverse();
+  const defaultSession = sessions.length ? sessions[0] : `${new Date().getFullYear()}`;
+  container.innerHTML = `
+    <div class="d-flex gap-2 align-items-center mb-3">
+      <div class="fw-bold me-2">Session:</div>
+      <select id="advisorSessionSelect" class="form-select form-select-sm" style="width:auto">
+        ${sessions.length ? sessions.map(s=>`<option value="${s}">${s}</option>`).join('') : `<option value="${defaultSession}">${defaultSession}</option>`}
+      </select>
+    </div>`;
+  const select = container.querySelector('#advisorSessionSelect');
+  select.value = defaultSession;
+  select.addEventListener('change', ()=> applyAdvisorFilters(document.querySelector('#advisorsGrid'), select.value));
+  applyAdvisorFilters(document.querySelector('#advisorsGrid'), select.value);
+}
+
+function applyAdvisorFilters(container, year){
+  const yearStr = String(year);
+  const list = advisors.filter(a => (a.session && a.session.includes(yearStr)));
+  if (!list.length) {
+    container.innerHTML = `<div class="col-12"><div class="glass-card p-4 text-center"><h3 class="mb-1">Coming soon</h3><p class="text-muted mb-0">Faculty advisors for ${year} will be announced soon.</p></div></div>`;
+  } else {
+    container.innerHTML = list.map(a => `
+      <div class="col-6 col-md-4 col-lg-3 fade-in-up">
+        <div class="feature-card text-center h-100 p-3">
+          <img src="${a.avatar}" alt="${a.name}" class="rounded-circle mb-3" style="width:80px;height:80px;object-fit:cover;">
+          <h6 class="mb-1">${a.name}</h6>
+          <p class="text-primary small mb-1">${a.department}</p>
+          <p class="text-muted small mb-2">${a.bio}</p>
+        </div>
+      </div>`).join('');
+  }
   revealNow(container);
 }
 
