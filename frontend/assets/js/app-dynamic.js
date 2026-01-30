@@ -290,20 +290,36 @@ function initLiteYouTube(){
 }
 
 async function loadYouTubeFromAPI(){
-  try {
-    const base = window.API_BASE_URL || '';
-    const handle = '@PSTUEntrepreneurshipClub';
-    const url = `${base.replace(/\/$/,'')}/integrations/youtube?handle=${encodeURIComponent(handle)}&max=6`;
-    const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
-    if (res.ok) {
+  // Try multiple base URLs so frontend can reach the backend in different deploy setups.
+  const bases = [...new Set([window.API_BASE_URL || '', window.location.origin || '', ''])];
+  const handle = '@PSTUEntrepreneurshipClub';
+  const limit = 6;
+  for (const base of bases) {
+    try {
+      const baseClean = base ? base.replace(/\/$/, '') : '';
+      const url = `${baseClean}/integrations/youtube?handle=${encodeURIComponent(handle)}&max=${limit}`;
+      // Skip if URL would be something like "/integrations..." and baseClean is empty (we'll still allow relative URL)
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(url, { headers: { 'Accept': 'application/json' }, signal: controller.signal });
+      clearTimeout(timeout);
+      if (!res.ok) {
+        console.debug('YouTube fetch attempt failed:', url, res.status);
+        continue;
+      }
       const data = await res.json();
       if (Array.isArray(data.items) && data.items.length) {
         youtubeVideos = data.items.map(it => ({ id: it.id, title: it.title }));
+        console.info('Loaded YouTube videos from', baseClean || 'relative');
+        return true;
       }
+    } catch (err) {
+      console.debug('YouTube fetch error for base', base, err?.message || err);
+      // try next candidate
     }
-  } catch (e) {
-    console.warn('YouTube fetch failed, using local fallback');
   }
+  console.warn('YouTube fetch failed for all endpoints, using local fallback');
+  return false;
 }
 
 // ---------- LIGHTBOX ----------

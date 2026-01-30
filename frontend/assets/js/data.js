@@ -104,10 +104,10 @@ export const teamMembers = [
 
 // GALLERY: Local asset images for the photo gallery
 export const galleryImages = [
-  { src: 'assets/images/547681134_122180583572564989_6191046846726229010_n.jpg', alt: 'Club event moment 1' },
-  { src: 'assets/images/552885768_122181443138564989_1335234260207935214_n.jpg', alt: 'Club event moment 2' },
-  { src: 'assets/images/553295222_122181595376564989_3669177668535221672_n.jpg', alt: 'Club event moment 3' },
-  { src: 'assets/images/554555010_122182089860564989_3791081792842274683_n.jpg', alt: 'Club event moment 4' },
+  { src: 'assets/images/summit/552885768_122181443138564989_1335234260207935214_n.jpg', alt: 'Club event moment 1' },
+  { src: 'assets/images/summit/553295222_122181595376564989_3669177668535221672_n.jpg', alt: 'Club event moment 2' },
+  { src: 'assets/images/summit/554555010_122182089860564989_3791081792842274683_n.jpg', alt: 'Club event moment 3' },
+  { src: 'assets/images/summit/547681134_122180583572564989_6191046846726229010_n.jpg', alt: 'Club event moment 4' },
   { src: 'assets/images/571022729_122186224298564989_4893407098330538923_n.jpg', alt: 'Club event moment 5' },
   { src: 'assets/images/590877411_122191041788564989_1420952966212735132_n.jpg', alt: 'Club event moment 6' },
   { src: 'assets/images/Digital marketing course.jpg', alt: 'Workshop snapshot' },
@@ -116,9 +116,11 @@ export const galleryImages = [
 
 // VIDEOS: YouTube embeds (replace ids with club channel’s videos)
 export const youtubeVideos = [
-  { id: 'dQw4w9WgXcQ', title: 'Event Highlights' },
-  { id: '3fumBcGZQK0', title: 'Pitch Competition Recap' },
-  { id: 'lTTajzrSkCw', title: 'Workshop Moments' }
+  { id: 'pcz4w-rowH8', title: 'Event Highlights' },
+  { id: 'qKdhpvb2idc', title: 'Digital Marketing Course' },
+  { id: 'b149-lpDaFQ', title: 'All About PSTU Entrepreneurship Club' },
+  { id: 'nEoA7ajG2PE', title: 'Founder & Co-founder' },
+  { id: 'ATh96STyyuU', title: 'Executive Team' }
 ];
 
 // Simple category extraction helpers

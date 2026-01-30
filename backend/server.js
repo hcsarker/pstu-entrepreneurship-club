@@ -108,7 +108,8 @@ app.use('/api', requireDb);
 
 // Public integrations that don't require DB
 const youtubeRoutes = require('./routes/youtubeRoutes');
-app.use('/integrations', youtubeRoutes);
+// Allow permissive CORS on integrations (feeds) so static frontends can fetch without strict origin list
+app.use('/integrations', cors(), youtubeRoutes);
 
 connectDatabase();
 
