@@ -7,12 +7,12 @@ const API_CONFIG = {
 
 // Get the API base URL based on environment
 function getApiBaseUrl() {
-    // Check if running on localhost
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    // Treat empty hostname (file://) and localhost as development
+    const host = window.location.hostname || '';
+    if (!host || host === 'localhost' || host === '127.0.0.1') {
         return API_CONFIG.development;
-    } else {
-        return API_CONFIG.production;
     }
+    return API_CONFIG.production;
 }
 
 // Export for use in other scripts

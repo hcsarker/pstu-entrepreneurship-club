@@ -1,4 +1,5 @@
 const express = require('express');
+const { fetch } = require('undici');
 const router = express.Router();
 
 // Resolve channelId from handle by scraping YouTube channel page
