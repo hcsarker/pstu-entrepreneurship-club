@@ -121,6 +121,9 @@ const api = require('./api');
 app.use('/api', memberRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/api', registrationRoutes);
+// Admin routes (authentication required)
+const adminRoutes = require('./routes/adminRoutes');
+app.use('/api/admin', adminRoutes);
 
 // Default route
 app.get('/', (req, res) => {

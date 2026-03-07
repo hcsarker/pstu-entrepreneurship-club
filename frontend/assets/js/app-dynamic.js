@@ -17,18 +17,20 @@ let youtubeVideos = localYouTube;
 async function tryFetchAll(){
   const base = window.API_BASE_URL || '';
   try {
-    const [ev, prod, posts, su, team] = await Promise.all([
+    const [ev, prod, posts, su, team, advResp] = await Promise.all([
       fetchJSON(base + '/api/content/events'),
       fetchJSON(base + '/api/content/products'),
       fetchJSON(base + '/api/content/posts'),
       fetchJSON(base + '/api/content/startups'),
-      fetchJSON(base + '/api/content/team')
+      fetchJSON(base + '/api/content/team'),
+      fetchJSON(base + '/api/content/advisors').catch(()=>({ items: [] }))
     ]);
     if (ev?.items?.length) { events = ev.items.map(x=>({ ...x, type: x.type || (new Date(x.date) > new Date() ? 'upcoming':'past') })); eventCategories = [...new Set(events.map(e=>e.category).filter(Boolean))]; }
     if (prod?.items?.length) { products = prod.items; productCategories = [...new Set(products.map(p=>p.category).filter(Boolean))]; }
     if (posts?.items?.length) { blogPosts = posts.items; blogCategories = [...new Set(blogPosts.map(p=>p.category).filter(Boolean))]; }
     if (su?.items?.length) { startups = su.items; }
     if (team?.items?.length) { teamMembers = team.items; }
+    if (advResp?.items?.length) { advisors = advResp.items; }
   } catch (e) {
     console.warn('Content API fetch failed, using local data', e);
   }
@@ -109,7 +111,14 @@ ${new Date().getFullYear()}`;
   const grid = document.querySelector('#teamGrid');
   const select = container.querySelector('#teamSessionSelect');
   select.value = defaultSession;
-  select.addEventListener('change', ()=> applyTeamFilters(grid, select.value));
+  // update hero subtitle if present
+  const heroSub = document.querySelector('#teamHeroSubtitle');
+  if(heroSub) heroSub.textContent = `${defaultSession} Executive Committee`;
+  select.addEventListener('change', ()=> {
+    const val = select.value;
+    if(heroSub) heroSub.textContent = `${val} Executive Committee`;
+    applyTeamFilters(grid, val);
+  });
   applyTeamFilters(grid, select.value);
 }
 
@@ -156,7 +165,13 @@ function renderAdvisorFilters(container){
     </div>`;
   const select = container.querySelector('#advisorSessionSelect');
   select.value = defaultSession;
-  select.addEventListener('change', ()=> applyAdvisorFilters(document.querySelector('#advisorsGrid'), select.value));
+  const advSub = document.querySelector('#advisorHeroSubtitle');
+  if(advSub) advSub.textContent = `${defaultSession} Advisors`;
+  select.addEventListener('change', ()=> {
+    const val = select.value;
+    if(advSub) advSub.textContent = `${val} Advisors`;
+    applyAdvisorFilters(document.querySelector('#advisorsGrid'), val);
+  });
   applyAdvisorFilters(document.querySelector('#advisorsGrid'), select.value);
 }
 

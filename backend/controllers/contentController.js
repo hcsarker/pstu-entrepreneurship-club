@@ -3,6 +3,7 @@ const Product = require('../models/Product');
 const BlogPost = require('../models/BlogPost');
 const Startup = require('../models/Startup');
 const TeamMember = require('../models/TeamMember');
+const Advisor = require('../models/Advisor');
 const Joi = require('joi');
 
 // Basic list endpoints (read-only for now)
@@ -63,7 +64,8 @@ const seedContent = async (req, res) => {
       products: await seedIfEmpty(Product, products),
       posts: await seedIfEmpty(BlogPost, posts),
       startups: await seedIfEmpty(Startup, startups),
-      team: await seedIfEmpty(TeamMember, team)
+      team: await seedIfEmpty(TeamMember, team),
+      advisors: await seedIfEmpty(Advisor, [])
     };
 
     res.json({ success: true, seeded: results });
@@ -78,6 +80,8 @@ module.exports = {
   listProducts: listFactory(Product),
   listPosts: listFactory(BlogPost, { date: -1 }),
   listStartups: listFactory(Startup),
+  listStartups: listFactory(Startup),
   listTeam: listFactory(TeamMember),
+  listAdvisors: listFactory(Advisor),
   seedContent
 };
